@@ -35,13 +35,13 @@ var (
 		mysqlSslCert = "/etc/pki/tls/certs/mysql/client-cert.pem"
 		mysqlSslCa   = "/etc/pki/tls/certs/mysql/ca-cert.pem"*/
 
-	host              = flag.String("host", "127.0.0.1", "`MySQL host`")
-	user              = flag.String("user", "", "`MySQL username` (default: no default)")
-	pass              = flag.String("pass", "", "`MySQL password` (default: no default)")
+	host              = flag.String("host", "10.1.1.177", "`MySQL host`")
+	user              = flag.String("user", "dba", "`MySQL username` (default: no default)")
+	pass              = flag.String("pass", "123123", "`MySQL password` (default: no default)")
 	port              = flag.String("port", "3306", "`MySQL port`")
 	pollTime          = flag.Int("poll_time", 30, "Adjust to match your `polling interval`.if change, make sure change the wrapper.sh file too.")
 	nocache           = flag.Bool("nocache", false, "Do not cache results in a file (default: false)")
-	items             = flag.String("items", "", "-items <`item`,...> Comma-separated list of the items whose data you want (default: no default)")
+	items             = flag.String("items", "State_long_trx", "-items <`item`,...> Comma-separated list of the items whose data you want (default: no default)")
 	debugLog          = flag.String("debug_log", "", "If `debuglog` is a filename, it'll be used. (default: no default)")
 	cacheDir          = flag.String("cache_dir", "/tmp", "A `path` for saving cache. if change, make sure change the wrapper.sh file too.")
 	heartbeat         = flag.Bool("heartbeat", false, "Whether to use pt-heartbeat table for repl. delay calculation. (default: false)")
@@ -229,7 +229,17 @@ func collect() ([]bool, []map[string]string) {
 	// Get SHOW PROCESSLIST and aggregate it by state
 	if *procs {
 		collectionExist[SHOW_PROCESSLIST] = true
+		// show processlist 只查找了 state 的数据，如果要检测长事务，则需要添加时间列
 		collectionInfo[SHOW_PROCESSLIST] = collectAllRowsAsMapValue("show_processlist_", "state", db, "SHOW PROCESSLIST")
+		processlistTime := collectAllRowsAsMapValue("show_processlist_time_", "time", db, "SHOW PROCESSLIST")
+
+		for _, value := range processlistTime {
+			i, _ := strconv.Atoi(value)
+			if i == 0 {
+				collectionInfo[SHOW_PROCESSLIST]["show_processlist_20000000"] = "long_trx"
+			}
+		}
+
 		log.Println("collectionInfo show processlist:", collectionInfo[SHOW_PROCESSLIST])
 	}
 
@@ -370,6 +380,7 @@ func parse(collectionExist []bool, collectionInfo []map[string]string) map[strin
 			"State_writing_to_net":       0,
 			"State_none":                 0,
 			"State_other":                0, // Everything not listed above
+			"State_long_trx":             0,
 		}
 		if collectionExist[SHOW_PROCESSLIST] {
 			var state string
@@ -581,6 +592,7 @@ func print(result map[string]string, fp *os.File) {
 		"State_writing_to_net",
 		"State_none",
 		"State_other",
+		"State_long_trx",
 		"Handler_commit",
 		"Handler_delete",
 		"Handler_discover",
