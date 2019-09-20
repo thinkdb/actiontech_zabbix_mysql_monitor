@@ -40,6 +40,7 @@ var (
 	pass              = flag.String("pass", "123123", "`MySQL password` (default: no default)")
 	port              = flag.String("port", "3306", "`MySQL port`")
 	pollTime          = flag.Int("poll_time", 30, "Adjust to match your `polling interval`.if change, make sure change the wrapper.sh file too.")
+	longTrxTime       = flag.Int("long_trx_time", 15, "How long the SQL runs for long transactions")
 	nocache           = flag.Bool("nocache", false, "Do not cache results in a file (default: false)")
 	items             = flag.String("items", "State_long_trx", "-items <`item`,...> Comma-separated list of the items whose data you want (default: no default)")
 	debugLog          = flag.String("debug_log", "", "If `debuglog` is a filename, it'll be used. (default: no default)")
@@ -235,7 +236,7 @@ func collect() ([]bool, []map[string]string) {
 
 		for _, value := range processlistTime {
 			i, _ := strconv.Atoi(value)
-			if i == 0 {
+			if i > *longTrxTime {
 				collectionInfo[SHOW_PROCESSLIST]["show_processlist_20000000"] = "long_trx"
 			}
 		}
