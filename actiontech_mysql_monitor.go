@@ -232,10 +232,22 @@ func collect() ([]bool, []map[string]string) {
 		collectionExist[SHOW_PROCESSLIST] = true
 		// show processlist 只查找了 state 的数据，如果要检测长事务，则需要添加时间列
 		collectionInfo[SHOW_PROCESSLIST] = collectAllRowsAsMapValue("show_processlist_", "state", db, "SHOW PROCESSLIST")
-		processlistTime := collectAllRowsAsMapValue("show_processlist_time_", "time", db, "SHOW PROCESSLIST")
+		
+		//processlistTime := collectAllRowsAsMapValue("show_processlist_time_", "time", db, "SHOW PROCESSLIST")
+		
+		longTime := 0
+		if *pollTime/2 < *longTrxTime {
+			longTime = *pollTime/2
+		}else {
+			longTime = *longTrxTime
+		}
+		
+		longTrxSql := fmt.Sprintf("select b.time from information_schema.innodb_trx a, information_schema.processlist b " +
+			"where a.trx_mysql_thread_id = b.id where b.time > %d limit 1;", longTime)
+		processlistTime := query(db, longTrxSql)
 
 		for _, value := range processlistTime {
-			i, _ := strconv.Atoi(value)
+			i, _ := strconv.Atoi(value["time"])
 			if i > *longTrxTime {
 				collectionInfo[SHOW_PROCESSLIST]["show_processlist_20000000"] = "long_trx"
 			}
@@ -404,7 +416,7 @@ func parse(collectionExist []bool, collectionInfo []map[string]string) map[strin
 		}
 		intMapAdd(stat, procsStateMap)
 	}
-
+	//fmt.Println(collectionInfo[SHOW_INNODB_STATUS])
 	if value, ok := collectionInfo[SHOW_INNODB_STATUS]["innodb_status_text"]; ok {
 		result := parseInnodbStatusWithRule(value)
 		// percona comments:
@@ -687,6 +699,7 @@ func print(result map[string]string, fp *os.File) {
 		"query_rt1ms",
 		"query_rtavg",
 		"query_avgrt",
+		"Uptime",
 	}
 
 	// Return the output.

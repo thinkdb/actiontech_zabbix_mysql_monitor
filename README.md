@@ -304,6 +304,7 @@ relay_log_space: 取所有通道的relay_log_space的和
 |		State_writing_to_net|       SHOW PROCESSLIST|
 |		State_none|                 SHOW PROCESSLIST|
 |		State_other|                SHOW PROCESSLIST|
+|		State_long_trx|             SHOW PROCESSLIST|
 |		Handler_commit|             SHOW /*!50002 GLOBAL */ STATUS|
 |		Handler_delete|             SHOW /*!50002 GLOBAL */ STATUS|
 |		Handler_discover|           SHOW /*!50002 GLOBAL */ STATUS|

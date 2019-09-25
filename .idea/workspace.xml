@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b227c348-8d22-4d99-926a-fa214b0b0e13" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/actiontech_mysql_monitor.go" beforeDir="false" afterPath="$PROJECT_DIR$/actiontech_mysql_monitor.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -12,31 +13,22 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/actiontech_mysql_monitor.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13050">
-              <caret line="1331" column="69" selection-start-line="1331" selection-start-column="69" selection-end-line="1331" selection-end-column="69" />
+            <state relative-caret-position="-2350">
+              <caret line="938" column="6" selection-start-line="938" selection-start-column="6" selection-end-line="938" selection-end-column="6" />
               <folding>
                 <element signature="e#198#398#0" />
-                <element signature="e#5858#8307#0" />
-                <element signature="e#9068#10496#0" />
-                <element signature="e#10644#10724#0" />
-                <element signature="e#13651#14748#0" />
-                <element signature="e#14788#15404#0" />
+                <element signature="n#!!block;n#print#0" />
                 <element signature="n#!!block;n#getDelayFromHeartbeat#0" />
-                <element signature="n#!!block;n#query#0" />
                 <element signature="n#!!block;n#collectAllRowsToMap#0" />
-                <element signature="n#!!block;n#collectFirstRowAsMapValue#0" />
                 <element signature="n#!!block;n#collectRowsAsMapValue#0" />
-                <element signature="n#!!block;n#parseInnodbStatusWithRule#0" />
-                <element signature="n#!!block;n#handleInnodbStatusField#0" />
-                <element signature="n#!!block;n#doDefaultHandle#0" />
+                <element signature="e#31788#41263#1" />
                 <element signature="n#!!block;n#doAddSemWaitHandle#0" />
                 <element signature="n#!!block;n#doBidAddHandle#0" />
                 <element signature="n#!!block;n#doPurgeHandle#0" />
-                <element signature="n#!!block;n#doIncHandle#0" />
                 <element signature="n#!!block;n#parseRegexpSubmatch#0" />
                 <element signature="n#!!block;n#doNumOrEmptyOrArrayRegexpHandle#0" />
                 <element signature="n#!!block;n#convStrToInt64#0" />
@@ -50,10 +42,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/go/src/builtin/builtin.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="188" column="5" selection-start-line="188" selection-start-column="5" selection-end-line="188" selection-end-column="5" />
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="7776">
+                <caret line="324" column="50" selection-start-line="324" selection-start-column="50" selection-end-line="324" selection-end-column="50" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -66,6 +61,18 @@
       <find>pool_size</find>
       <find>Sort_rows</find>
       <find>do not exist</find>
+      <find>Query_time_count_04</find>
+      <find>netstat</find>
+      <find>Connections</find>
+      <find>Transactions</find>
+      <find>current_transactions</find>
+      <find>slave_ru</find>
+      <find>slave_running</find>
+      <find>show processlist</find>
+      <find>locked_transactions</find>
+      <find>active_transactions</find>
+      <find>lock</find>
+      <find>collectionInfo[SHOW_INNODB_STATUS]</find>
     </findStrings>
   </component>
   <component name="GOROOT" path="/usr/local/go" />
@@ -75,6 +82,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/actiontech_mysql_monitor.go" />
       </list>
     </option>
@@ -90,17 +98,16 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1680" />
-    <option name="y" value="23" />
-    <option name="width" value="1920" />
-    <option name="height" value="1057" />
+    <option name="x" value="1721" />
+    <option name="y" value="40" />
+    <option name="width" value="1680" />
+    <option name="height" value="971" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -112,6 +119,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -154,29 +162,29 @@
     </recent_temporary>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1680" y="23" width="1920" height="1057" extended-state="6" />
+    <frame x="1721" y="40" width="1680" height="971" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1687966" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.094017096" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" weight="0.32937366" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32937366" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31101513" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39956802" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="make" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32937366" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32937366" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="make" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,27 +210,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/actiontech_mysql_monitor.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13050">
-          <caret line="1331" column="69" selection-start-line="1331" selection-start-column="69" selection-end-line="1331" selection-end-column="69" />
+        <state relative-caret-position="-2350">
+          <caret line="938" column="6" selection-start-line="938" selection-start-column="6" selection-end-line="938" selection-end-column="6" />
           <folding>
             <element signature="e#198#398#0" />
-            <element signature="e#5858#8307#0" />
-            <element signature="e#9068#10496#0" />
-            <element signature="e#10644#10724#0" />
-            <element signature="e#13651#14748#0" />
-            <element signature="e#14788#15404#0" />
+            <element signature="n#!!block;n#print#0" />
             <element signature="n#!!block;n#getDelayFromHeartbeat#0" />
-            <element signature="n#!!block;n#query#0" />
             <element signature="n#!!block;n#collectAllRowsToMap#0" />
-            <element signature="n#!!block;n#collectFirstRowAsMapValue#0" />
             <element signature="n#!!block;n#collectRowsAsMapValue#0" />
-            <element signature="n#!!block;n#parseInnodbStatusWithRule#0" />
-            <element signature="n#!!block;n#handleInnodbStatusField#0" />
-            <element signature="n#!!block;n#doDefaultHandle#0" />
+            <element signature="e#31788#41263#1" />
             <element signature="n#!!block;n#doAddSemWaitHandle#0" />
             <element signature="n#!!block;n#doBidAddHandle#0" />
             <element signature="n#!!block;n#doPurgeHandle#0" />
-            <element signature="n#!!block;n#doIncHandle#0" />
             <element signature="n#!!block;n#parseRegexpSubmatch#0" />
             <element signature="n#!!block;n#doNumOrEmptyOrArrayRegexpHandle#0" />
             <element signature="n#!!block;n#convStrToInt64#0" />
@@ -231,6 +230,16 @@
             <element signature="n#!!block;n#intMapAdd#0" />
             <element signature="n#!!block;n#verifyMysqldPort#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="7776">
+            <caret line="324" column="50" selection-start-line="324" selection-start-column="50" selection-end-line="324" selection-end-column="50" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
