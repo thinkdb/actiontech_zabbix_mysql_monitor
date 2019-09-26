@@ -42,7 +42,7 @@ var (
 	pollTime          = flag.Int("poll_time", 30, "Adjust to match your `polling interval`.if change, make sure change the wrapper.sh file too.")
 	longTrxTime       = flag.Int("long_trx_time", 15, "How long the SQL runs for long transactions")
 	nocache           = flag.Bool("nocache", false, "Do not cache results in a file (default: false)")
-	items             = flag.String("items", "State_long_trx", "-items <`item`,...> Comma-separated list of the items whose data you want (default: no default)")
+	items             = flag.String("items", "Uptime", "-items <`item`,...> Comma-separated list of the items whose data you want (default: no default)")
 	debugLog          = flag.String("debug_log", "", "If `debuglog` is a filename, it'll be used. (default: no default)")
 	cacheDir          = flag.String("cache_dir", "/tmp", "A `path` for saving cache. if change, make sure change the wrapper.sh file too.")
 	heartbeat         = flag.Bool("heartbeat", false, "Whether to use pt-heartbeat table for repl. delay calculation. (default: false)")
@@ -700,6 +700,7 @@ func print(result map[string]string, fp *os.File) {
 		"query_rtavg",
 		"query_avgrt",
 		"Uptime",
+		"deadlock",
 	}
 
 	// Return the output.
@@ -926,14 +927,41 @@ func parseInnodbStatusWithRule(status string) map[string]int64 {
 	txnSeen := false
 	preField := ""
 	fields := strings.Split(status, "\n")
+	deadlock := 0
+	deadlockId := 0
 	for _, field := range fields {
 		field := strings.TrimSpace(field)
 		log.Println("parseInnodbStatusWithRule:Field:", field)
+		// 处理 死锁 信息
+		if strings.HasPrefix(field, "LATEST DETECTED DEADLOCK") {
+			deadlock = 1
+		}
+		if deadlock == 1 {
+			deadlockId += 1
+		}
+		if deadlock == 1 && deadlockId == 3 {
+			deadlock = 0
+			doDeadlockHandle(field, &result)
+		}
+		
 		handleInnodbStatusField(field, preField, &txnSeen, &result)
 		preField = field
 	}
 	return result
 }
+
+func doDeadlockHandle(field string, result *map[string]int64) {
+	fieldList := strings.Split(field, " ")
+	timeLayout := "2006-01-02 15:04:05"
+	timeItem := fmt.Sprintf("%s %s", fieldList[0], fieldList[1])
+	t, e := time.Parse(timeLayout, timeItem)
+	if e != nil {
+		(*result)["deadlock"] = 0
+	}else{
+		(*result)["deadlock"] = t.Unix()
+	}
+}
+
 
 func handleInnodbStatusField(field string, preField string, txnSeen *bool, result *map[string]int64) {
 	var ruleDesc = `

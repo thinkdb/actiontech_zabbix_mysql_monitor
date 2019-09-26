@@ -2,7 +2,7 @@
 
 percona monitoring plugins zabbix的go语言版本
 
-## 0. 版本下载使用1.0分支  
+## 0. 版本下载使用 master 分支  
 
 ## 1. item取值与percona版本差异
 使用mysqld端口自动发现相关item（zabbix Low level discovery）  
@@ -339,6 +339,7 @@ relay_log_space: 取所有通道的relay_log_space的和
 |		thread_hash_memory|         SHOW /\*!50000 ENGINE*/ INNODB STATUS|
 |		innodb_sem_waits|           SHOW /\*!50000 ENGINE*/ INNODB STATUS|
 |		innodb_sem_wait_time_ms|    SHOW /\*!50000 ENGINE*/ INNODB STATUS|
+|		deadlock|                   SHOW /\*!50000 ENGINE*/ INNODB STATUS|
 |		Key_buf_bytes_unflushed|    key_cache_block_size*Key_blocks_not_flushed|
 |		Key_buf_bytes_used|         key_buffer_size-(Key_blocks_unused*key_cache_block_size)|
 |		key_buffer_size|            SHOW VARIABLES|
