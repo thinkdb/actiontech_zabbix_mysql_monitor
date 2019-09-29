@@ -36,8 +36,8 @@ var (
 		mysqlSslCa   = "/etc/pki/tls/certs/mysql/ca-cert.pem"*/
 
 	host              = flag.String("host", "127.0.0.1", "`MySQL host`")
-	user              = flag.String("user", "zbx", "`MySQL username` (default: zbx)")
-	pass              = flag.String("pass", "zabbix168", "`MySQL password` (default: zabbix168)")
+	user              = flag.String("user", "", "`MySQL username` (default: zbx)")
+	pass              = flag.String("pass", "", "`MySQL password` (default: zabbix168)")
 	port              = flag.String("port", "3306", "`MySQL port`")
 	pollTime          = flag.Int("poll_time", 30, "Adjust to match your `polling interval`.if change, make sure change the wrapper.sh file too.")
 	longTrxTime       = flag.Int("long_trx_time", 15, "How long the SQL runs for long transactions")
