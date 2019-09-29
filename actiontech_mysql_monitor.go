@@ -36,8 +36,8 @@ var (
 		mysqlSslCa   = "/etc/pki/tls/certs/mysql/ca-cert.pem"*/
 
 	host              = flag.String("host", "127.0.0.1", "`MySQL host`")
-	user              = flag.String("user", "", "`MySQL username` (default: zbx)")
-	pass              = flag.String("pass", "", "`MySQL password` (default: zabbix168)")
+	user              = flag.String("user", "zbx", "`MySQL username` (default: zbx)")
+	pass              = flag.String("pass", "zabbix168", "`MySQL password` (default: zabbix168)")
 	port              = flag.String("port", "3306", "`MySQL port`")
 	pollTime          = flag.Int("poll_time", 30, "Adjust to match your `polling interval`.if change, make sure change the wrapper.sh file too.")
 	longTrxTime       = flag.Int("long_trx_time", 15, "How long the SQL runs for long transactions")
@@ -100,9 +100,9 @@ func main() {
 	if *items == "mysqld_port_listen" {
 		// default port: 3306
 		if verifyMysqldPort(*port) {
-			fmt.Println(*port, ":", 1)
+			fmt.Println(1)
 		} else {
-			fmt.Println(*port, ":", 0)
+			fmt.Println(0)
 		}
 		log.Fatalln("verify Mysqld Port done, exit.")
 	}
@@ -243,7 +243,7 @@ func collect() ([]bool, []map[string]string) {
 		}
 		
 		longTrxSql := fmt.Sprintf("select b.time from information_schema.innodb_trx a, information_schema.processlist b " +
-			"where a.trx_mysql_thread_id = b.id where b.time > %d limit 1;", longTime)
+			"where a.trx_mysql_thread_id = b.id and b.time > %d limit 1;", longTime)
 		processlistTime := query(db, longTrxSql)
 
 		for _, value := range processlistTime {
@@ -728,7 +728,7 @@ func print(result map[string]string, fp *os.File) {
 		fields := strings.Split(*items, ",")
 		for _, field := range fields {
 			if val, ok := output[field]; ok {
-				fmt.Println(field, ":", val)
+				fmt.Println(val)
 			} else {
 				fmt.Println(field + " do not exist")
 			}
@@ -750,7 +750,7 @@ func printItemFromCacheFile(items string, filename string) {
 	fields := strings.Split(items, ",")
 	for _, field := range fields {
 		if val, ok := data[field]; ok {
-			fmt.Println(field, ":", val)
+			fmt.Println(val)
 		} else {
 			fmt.Println(field + " do not exist")
 		}
