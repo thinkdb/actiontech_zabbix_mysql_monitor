@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b227c348-8d22-4d99-926a-fa214b0b0e13" name="Default Changelist" comment="" />
+    <list default="true" id="b227c348-8d22-4d99-926a-fa214b0b0e13" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/actiontech_mysql_monitor.go" beforeDir="false" afterPath="$PROJECT_DIR$/actiontech_mysql_monitor.go" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,23 +23,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/actiontech_mysql_monitor.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-275">
-              <caret line="19" column="6" lean-forward="true" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+            <state relative-caret-position="202">
+              <caret line="41" column="50" lean-forward="true" selection-start-line="41" selection-start-column="50" selection-end-line="41" selection-end-column="50" />
               <folding>
-                <element signature="n#!!block;n#print#0" />
-                <element signature="n#!!block;n#getDelayFromHeartbeat#0" />
-                <element signature="n#!!block;n#collectAllRowsToMap#0" />
-                <element signature="n#!!block;n#collectRowsAsMapValue#0" />
-                <element signature="e#31788#41263#1" />
+                <element signature="e#198#398#0" />
                 <element signature="n#!!block;n#doAddSemWaitHandle#0" />
                 <element signature="n#!!block;n#doBidAddHandle#0" />
                 <element signature="n#!!block;n#doPurgeHandle#0" />
-                <element signature="n#!!block;n#parseRegexpSubmatch#0" />
-                <element signature="n#!!block;n#doNumOrEmptyOrArrayRegexpHandle#0" />
                 <element signature="n#!!block;n#convStrToInt64#0" />
-                <element signature="n#!!block;n#fieldRegexpJudge#0" />
-                <element signature="n#!!block;n#stringMapAdd#0" />
-                <element signature="n#!!block;n#intMapAdd#0" />
                 <element signature="n#!!block;n#verifyMysqldPort#0" />
               </folding>
             </state>
@@ -48,8 +41,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="96">
-                <caret line="4" selection-start-line="4" selection-end-line="4" />
+              <first_editor relative-caret-position="9984">
+                <caret line="419" column="12" selection-start-line="419" selection-start-column="12" selection-end-line="419" selection-end-column="12" />
               </first_editor>
               <second_editor />
             </state>
@@ -110,6 +103,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -121,7 +115,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -147,13 +140,6 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <recent_temporary>
-      <list>
-        <item itemvalue="Go Build.go build actiontech_mysql_monitor.go" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
@@ -164,11 +150,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1680" height="971" extended-state="6" />
+    <frame x="0" y="23" width="1680" height="971" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49880952" visible="true" weight="0.18131869" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49880952" visible="true" weight="0.24603175" />
       <window_info id="Structure" order="1" sideWeight="0.5018868" side_tool="true" weight="0.18131869" />
-      <window_info id="Favorites" order="2" sideWeight="0.5011905" side_tool="true" visible="true" weight="0.18131869" />
+      <window_info id="Favorites" order="2" sideWeight="0.5011905" side_tool="true" weight="0.18131869" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31101513" />
@@ -179,7 +165,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.5845238" />
-      <window_info active="true" anchor="bottom" x="1680" y="23" width="1920" height="1057" id="Terminal" order="10" type="FLOATING" visible="true" weight="0.9142857" />
+      <window_info active="true" anchor="bottom" x="0" y="23" width="1680" height="971" id="Terminal" order="10" type="FLOATING" visible="true" weight="0.9142857" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -215,8 +201,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="96">
-            <caret line="4" selection-start-line="4" selection-end-line="4" />
+          <first_editor relative-caret-position="9984">
+            <caret line="419" column="12" selection-start-line="419" selection-start-column="12" selection-end-line="419" selection-end-column="12" />
           </first_editor>
           <second_editor />
         </state>
@@ -224,23 +210,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/actiontech_mysql_monitor.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-275">
-          <caret line="19" column="6" lean-forward="true" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+        <state relative-caret-position="202">
+          <caret line="41" column="50" lean-forward="true" selection-start-line="41" selection-start-column="50" selection-end-line="41" selection-end-column="50" />
           <folding>
-            <element signature="n#!!block;n#print#0" />
-            <element signature="n#!!block;n#getDelayFromHeartbeat#0" />
-            <element signature="n#!!block;n#collectAllRowsToMap#0" />
-            <element signature="n#!!block;n#collectRowsAsMapValue#0" />
-            <element signature="e#31788#41263#1" />
+            <element signature="e#198#398#0" />
             <element signature="n#!!block;n#doAddSemWaitHandle#0" />
             <element signature="n#!!block;n#doBidAddHandle#0" />
             <element signature="n#!!block;n#doPurgeHandle#0" />
-            <element signature="n#!!block;n#parseRegexpSubmatch#0" />
-            <element signature="n#!!block;n#doNumOrEmptyOrArrayRegexpHandle#0" />
             <element signature="n#!!block;n#convStrToInt64#0" />
-            <element signature="n#!!block;n#fieldRegexpJudge#0" />
-            <element signature="n#!!block;n#stringMapAdd#0" />
-            <element signature="n#!!block;n#intMapAdd#0" />
             <element signature="n#!!block;n#verifyMysqldPort#0" />
           </folding>
         </state>
