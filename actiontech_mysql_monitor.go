@@ -72,7 +72,7 @@ var (
 
 func main() {
 	flag.Parse()
-
+	Version = "2.0"
 	if *version {
 		fmt.Println("version:", Version)
 		os.Exit(1)
