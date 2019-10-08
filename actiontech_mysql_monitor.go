@@ -72,7 +72,7 @@ var (
 
 func main() {
 	flag.Parse()
-	Version = "2.0"
+	Version = "3.0"
 	if *version {
 		fmt.Println("version:", Version)
 		os.Exit(1)
@@ -249,7 +249,7 @@ func collect() ([]bool, []map[string]string) {
 		for _, value := range processlistTime {
 			i, _ := strconv.Atoi(value["time"])
 			if i > *longTrxTime {
-				collectionInfo[SHOW_PROCESSLIST]["show_processlist_20000000"] = "long_trx"
+				collectionInfo[SHOW_PROCESSLIST]["show_processlist_20000000"] = fmt.Sprintf("long_trx_%d", i)
 			}
 		}
 
@@ -407,12 +407,18 @@ func parse(collectionExist []bool, collectionInfo []map[string]string) map[strin
 				// we don't really care about the type of locking it is.
 				state = reg.ReplaceAllString(value, "locked")
 				state = strings.Replace(strings.ToLower(value), " ", "_", -1)
+				if strings.HasPrefix(state, "long_trx") {
+					num := strings.Split(state, "_")[2]
+					timeNum, _ := strconv.Atoi(num)
+					procsStateMap["State_long_trx"] = int64(timeNum)
+				}
 				if _, ok := procsStateMap["State_"+state]; ok {
 					procsStateMap["State_"+state]++
 				} else {
 					procsStateMap["State_other"]++
 				}
 			}
+			procsStateMap["State_other"]--
 		}
 		intMapAdd(stat, procsStateMap)
 	}
