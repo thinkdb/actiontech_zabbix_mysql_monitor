@@ -39,8 +39,8 @@ var (
 	user              = flag.String("user", "zbx", "`MySQL username` (default: zbx)")
 	pass              = flag.String("pass", "zabbix168", "`MySQL password` (default: zabbix168)")
 	port              = flag.String("port", "3306", "`MySQL port`")
-	pollTime          = flag.Int("poll_time", 30, "Adjust to match your `polling interval`.if change, make sure change the wrapper.sh file too.")
-	longTrxTime       = flag.Int("long_trx_time", 15, "How long the SQL runs for long transactions")
+	pollTime          = flag.Int("poll_time", 24, "Adjust to match your `polling interval`.if change, make sure change the wrapper.sh file too.")
+	longTrxTime       = flag.Int("long_trx_time", 10, "How long the SQL runs for long transactions")
 	nocache           = flag.Bool("nocache", false, "Do not cache results in a file (default: false)")
 	items             = flag.String("items", "", "-items <`item`,...> Comma-separated list of the items whose data you want (default: no default)")
 	debugLog          = flag.String("debug_log", "", "If `debuglog` is a filename, it'll be used. (default: no default)")
@@ -243,7 +243,7 @@ func collect() ([]bool, []map[string]string) {
 		}
 		
 		longTrxSql := fmt.Sprintf("select b.time from information_schema.innodb_trx a, information_schema.processlist b " +
-			"where a.trx_mysql_thread_id = b.id and b.time > %d limit 1;", longTime)
+			"where a.trx_mysql_thread_id = b.id and b.time > %d and b.user not in ('root', 'dba', 'bakuser') order by b.time desc limit 1;", longTime)
 		processlistTime := query(db, longTrxSql)
 
 		for _, value := range processlistTime {
