@@ -35,9 +35,9 @@ var (
 		mysqlSslCert = "/etc/pki/tls/certs/mysql/client-cert.pem"
 		mysqlSslCa   = "/etc/pki/tls/certs/mysql/ca-cert.pem"*/
 
-	host              = flag.String("host", "127.0.0.1", "`MySQL host`")
+	host              = flag.String("host", "localhost", "`MySQL host`")
 	user              = flag.String("user", "zbx", "`MySQL username` (default: zbx)")
-	pass              = flag.String("pass", "zabbix168", "`MySQL password` (default: zabbix168)")
+	pass              = flag.String("pass", "zabbix", "`MySQL password` (default: zabbix168)")
 	port              = flag.String("port", "3306", "`MySQL port`")
 	pollTime          = flag.Int("poll_time", 24, "Adjust to match your `polling interval`.if change, make sure change the wrapper.sh file too.")
 	longTrxTime       = flag.Int("long_trx_time", 10, "How long the SQL runs for long transactions")
@@ -58,6 +58,7 @@ var (
 	discoveryPort     = flag.Bool("discovery_port", false, "`discovery mysqld port`, print in json format (default: false)")
 	useSudo           = flag.Bool("sudo", true, "Use `sudo netstat...`")
 	version           = flag.Bool("version", false, "print version")
+	socket            = flag.String("socket", "", "socket file ")
 
 	// log
 	debugLogFile *os.File
@@ -148,17 +149,32 @@ func main() {
 func collect() ([]bool, []map[string]string) {
 	// Connect to MySQL.
 	var db *sql.DB
-	if mysqlSsl {
-		log.Println("// TODO: Use mysql ssl")
-	} else {
+	if *socket != "" {
 		var err error
-		log.Printf("Connecting mysql: user %s, pass %s, host %s, port %s", *user, *pass, *host, *port)
-		db, err = sql.Open("mysql", *user+":"+*pass+"@tcp("+*host+":"+*port+")/")
+		dsn := fmt.Sprintf("%s:%s@unix(%s)/mysql", *user, *pass, *socket)
+		db, err = sql.Open("mysql", dsn)
 		if nil != err {
+			fmt.Println(err.Error())
 			log.Fatalf("sql.Open err:(%s) exit !", err)
 		}
 		defer db.Close()
 		if err := db.Ping(); nil != err {
+			fmt.Println(err.Error())
+			log.Fatalf("db.Ping err:(%s) exit !", err)
+		}
+	} else {
+		var err error
+		log.Printf("Connecting mysql: user %s, pass %s, host %s, port %s", *user, *pass, *host, *port)
+		dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/mysql", *user, *pass, *host, *port)
+		//db, err = sql.Open("mysql", *user+":"+*pass+"@tcp("+*host+":"+*port+")/")
+		db, err = sql.Open("mysql", dsn)
+		if nil != err {
+			fmt.Println(err.Error())
+			log.Fatalf("sql.Open err:(%s) exit !", err)
+		}
+		defer db.Close()
+		if err := db.Ping(); nil != err {
+			fmt.Println(err.Error())
 			log.Fatalf("db.Ping err:(%s) exit !", err)
 		}
 	}
@@ -232,24 +248,30 @@ func collect() ([]bool, []map[string]string) {
 		collectionExist[SHOW_PROCESSLIST] = true
 		// show processlist 只查找了 state 的数据，如果要检测长事务，则需要添加时间列
 		collectionInfo[SHOW_PROCESSLIST] = collectAllRowsAsMapValue("show_processlist_", "state", db, "SHOW PROCESSLIST")
-		
+
 		//processlistTime := collectAllRowsAsMapValue("show_processlist_time_", "time", db, "SHOW PROCESSLIST")
-		
+
 		longTime := 0
 		if *pollTime/2 < *longTrxTime {
-			longTime = *pollTime/2
-		}else {
+			longTime = *pollTime / 2
+		} else {
 			longTime = *longTrxTime
 		}
-		
-		longTrxSql := fmt.Sprintf("select b.time from information_schema.innodb_trx a, information_schema.processlist b " +
-			"where a.trx_mysql_thread_id = b.id and b.time > %d and b.user not in ('root', 'dba', 'bakuser') order by b.time desc limit 1;", longTime)
+
+		longTrxSql := fmt.Sprintf("select b.* " +
+			"from information_schema.processlist b LEFT join information_schema.innodb_trx a on a.trx_mysql_thread_id = b.id "+
+			"where b.time > %d and b.user not in ('root', 'dba', 'bakuser','system user', 'repl', 'dml_user') " +
+			"and b.COMMAND != 'Sleep' order by b.time desc limit 1;", longTime)
 		processlistTime := query(db, longTrxSql)
 
 		for _, value := range processlistTime {
 			i, _ := strconv.Atoi(value["time"])
 			if i > *longTrxTime {
 				collectionInfo[SHOW_PROCESSLIST]["show_processlist_20000000"] = fmt.Sprintf("long_trx_%d", i)
+				f, _ := os.OpenFile("/tmp/long_trx_or_query_sql.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600 )
+				ret := fmt.Sprintf("ID:%s | User:%s | Host:%s | DB:%s| Command:%s | Time:%s | State:%s | info:%s | \n",
+					value["id"], value["user"], value["host"], value["db"], value["command"], value["time"], value["state"], value["info"])
+				_, _ = f.WriteString(ret)
 			}
 		}
 
@@ -949,7 +971,7 @@ func parseInnodbStatusWithRule(status string) map[string]int64 {
 			deadlock = 0
 			doDeadlockHandle(field, &result)
 		}
-		
+
 		handleInnodbStatusField(field, preField, &txnSeen, &result)
 		preField = field
 	}
@@ -963,11 +985,10 @@ func doDeadlockHandle(field string, result *map[string]int64) {
 	t, e := time.Parse(timeLayout, timeItem)
 	if e != nil {
 		(*result)["deadlock"] = 0
-	}else{
+	} else {
 		(*result)["deadlock"] = t.Unix()
 	}
 }
-
 
 func handleInnodbStatusField(field string, preField string, txnSeen *bool, result *map[string]int64) {
 	var ruleDesc = `
